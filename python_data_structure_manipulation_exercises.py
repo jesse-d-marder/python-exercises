@@ -121,8 +121,15 @@ students = [
 # How many students are there?
 print(f"The number of students is {len(students)}")
 # How many students prefer light coffee? For each type of coffee roast?
-prefer_light_coffee = [1 for student in students if student['coffee_preference']=='light']
-print(f"{sum(prefer_light_coffee)} students prefer light coffee")
+coffee_preferences= [student["coffee_preference"] for student in students]
+coffee_freq = {}
+for coffee_p in coffee_preferences:
+    if coffee_p in coffee_freq:
+        coffee_freq[coffee_p]+=1
+    else:
+        coffee_freq[coffee_p]=1
+
+print(f"Coffee preferences: {coffee_freq}")
 # How many types of each pet are there?
 pets = len(set([student['pets'][0]['species'] for student in students if len(student['pets'])>0]))
 print(f"The number of pets is {pets}")
@@ -142,18 +149,86 @@ class_info = [student['course'] for student in students]
 web_dev = len([x for x in class_info if x == 'web development'])
 data_science = len([x for x in class_info if x == 'data science'])
 print(f"{web_dev} students are in web development, {data_science} are in data science")
-# What is the average number of pets for students in web development? ### working
+# What is the average number of pets for students in web development?
 num_pets = {student['student']:len(student['pets']) for student in students if student['course']=='web development'}
-
+avg_num_pets = sum(num_pets.values())/len(num_pets)
+print(f" The average number of pets for students in web development is {avg_num_pets}")
 # What is the average pet age for students in data science?
+pet_data = [student['pets'] for student in students if student['course']=='data science']
+pet_ages = [pet['age'] for ind_pet in pet_data for pet in ind_pet]
+avg_pet_age = sum(pet_ages)/len(pet_ages)
+print(f"Average age of pet for students in data science is {avg_pet_age}")
 # What is most frequent coffee preference for data science students?
+coffee_preferences= [student["coffee_preference"] for student in students if student['course']=='data science']
+coffee_freq = {}
+for coffee_p in coffee_preferences:
+    if coffee_p in coffee_freq:
+        coffee_freq[coffee_p]+=1
+    else:
+        coffee_freq[coffee_p]=1
+print(f"Most frequent coffee preferences for data science students: {max(coffee_freq)}")
 # What is the least frequent coffee preference for web development students?
+coffee_preferences= [student["coffee_preference"] for student in students if student['course']=='web development']
+coffee_freq = {}
+for coffee_p in coffee_preferences:
+    if coffee_p in coffee_freq:
+        coffee_freq[coffee_p]+=1
+    else:
+        coffee_freq[coffee_p]=1
+print(f"Least frequent coffee preferences for web development students: {min(coffee_freq)}")
 # What is the average grade for students with at least 2 pets?
+grades = [student["grades"] for student in students if len(student['pets'])>=2]
+avg_grade=sum(sum(grades,[]))/len(sum(grades,[]))
+print(f"Average grade of a student with at least 2 pets: {avg_grade}")
 # How many students have 3 pets?
+students_w_3 = len([student for student in students if len(student['pets'])==3])
+print(f"{students_w_3} student(s) have 3 pets")
 # What is the average grade for students with 0 pets?
+grades = [student["grades"] for student in students if len(student['pets'])==0]
+avg_grade=sum(sum(grades,[]))/len(sum(grades,[]))
+print(f"Average grade of a student with 0 pets: {avg_grade}")
 # What is the average grade for web development students? data science students?
+wd_grades = [student["grades"] for student in students if student["course"]=='web development']
+wd_avg_grade=sum(sum(wd_grades,[]))/len(sum(wd_grades,[]))
+print(f"Average grade of a web development student: {wd_avg_grade}")
+
+ds_grades = [student["grades"] for student in students if student["course"]=='data science']
+ds_avg_grade=sum(sum(ds_grades,[]))/len(sum(ds_grades,[]))
+print(f"Average grade of a data science student: {ds_avg_grade}")
+
 # What is the average grade range (i.e. highest grade - lowest grade) for dark coffee drinkers?
+dc_grades = [student["grades"] for student in students if student["coffee_preference"]=='dark']
+avg_dc_grades = [sum(ind_grades)/len(ind_grades) for ind_grades in dc_grades]
+print(f"Dark coffee drinkers have average grades in the following range: {min(avg_dc_grades)} - {max(avg_dc_grades)}")
+
 # What is the average number of pets for medium coffee drinkers?
+
+num_pets = {student['student']:len(student['pets']) for student in students if student['coffee_preference']=='medium'}
+avg_num_pets = sum(num_pets.values())/len(num_pets)
+print(f" The average number of pets for students who drink medium coffee is {avg_num_pets}")
 # What is the most common type of pet for web development students?
+
+pets = [student["pets"] for student in students if student['course']=='web development']
+pet_species = [pet[0]["species"] for pet in pets]
+
+pet_type_freq = {}
+for pet_t in pet_species:
+    if pet_t in pet_type_freq:
+        pet_type_freq[pet_t]+=1
+    else:
+        pet_type_freq[pet_t]=1
+
+print(f"Types of pet for web development students: {pet_type_freq}")
+
 # What is the average name length?
+
+name_length = [len(student["student"]) for student in students]
+avg_name_length = sum(name_length)/len(name_length)
+print(f"The average name length is {avg_name_length} characters")
+
 # What is the highest pet age for light coffee drinkers?
+
+pet_data = [student['pets'] for student in students if student['coffee_preference']=='light']
+pet_ages = [pet['age'] for ind_pet in pet_data for pet in ind_pet]
+
+print(f"Highest pet age for light coffee drinkers is {max(pet_ages)}")
