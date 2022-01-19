@@ -218,7 +218,12 @@ for pet_t in pet_species:
     else:
         pet_type_freq[pet_t]=1
 
-print(f"Types of pet for web development students: {pet_type_freq}")
+most_common_pets = []
+for pet in pet_type_freq:
+    if pet_type_freq[pet] == max(pet_type_freq.values()):
+        most_common_pets.append(pet)
+
+print(f"Most common type(s) of pet for web development students: {most_common_pets}")
 
 # What is the average name length?
 

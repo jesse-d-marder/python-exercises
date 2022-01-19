@@ -34,3 +34,4 @@ password_at_least_5 = len(password)>=5
 username_no_more_20 = len(username)<=20
 password_vs_username = (username != password)
 starts_with_whitespace = (username[0]==' ') or (password[0]==' ')
+ends_with_whitespace = (username[-1]==' ') or (password[-1]==' ')
