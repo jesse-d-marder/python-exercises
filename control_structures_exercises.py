@@ -142,7 +142,7 @@ while True:
     print("number | squared | cubed ")
     print("------ | ------- | ----- ")
     for i in range(1,user_num+1):
-        print(f"{i}      |{i**2}         |{i**3}  ")
+        print(f"{i: ^7}|{i**2:^9}|{i**3:<3}")
     
     continue_input = input("Want to continue? y/n")
 
@@ -184,7 +184,7 @@ books = [{'title':'Moby Dick', 'author': 'Herman Melville', 'genre': 'fiction'},
 {'title':'Gone Girl', 'author' :'Jane something', 'genre': 'fiction'},{'title':'Python Cookbook', 'author': 'Oreilly', 'genre': 'non-fiction'}]
 
 for book in books:
-    print(f'This book is called {book["title"]} and is by {book["author"]} and is the genre {book["genre"]}')
+    print(f'This book is called {book["title"]} and is by {book["author"]} and is in the genre {book["genre"]}')
 
 user_genre = input("Please enter a genre")
 
@@ -194,4 +194,4 @@ for book in books:
         print(f"In {book['genre']} we have {book['title']}")
         i += 1
     elif book["genre"] == user_genre and i != 0:
-        print(f"we also have {book['title']}")
+        print(f"and {book['title']}")

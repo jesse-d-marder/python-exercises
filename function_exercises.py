@@ -2,19 +2,24 @@
 
 # Define a function named is_two. It should accept one input and return True if the passed input is either the number or the string 2, False otherwise.
 def is_two(x):
+    # Checks if the passed argument (type converted to int) is equal to 2
     return int(x) == 2
+# Checks that 2 in string form returns True
 is_two('2')
 is_two(2)
 is_two('3')
 is_two(3)
+
 # Define a function named is_vowel. It should return True if the passed string is a vowel, False otherwise.
 def is_vowel(x):
+    # Checks whether the passed argument is in the list of vowels and returns True if it is
     return x in ['a','e','i','o','u']
 is_vowel('a')
 is_vowel('b')
 is_vowel(5)
 # Define a function named is_consonant. It should return True if the passed string is a consonant, False otherwise. Use your is_vowel function to accomplish this.
 def is_consonant(x):
+    # Uses the previously defined is_vowel function to return True if the passed argument to is_vowel is not True
     return not is_vowel(x)
 is_consonant('x')
 is_consonant('a')
@@ -64,32 +69,36 @@ def remove_vowels(x):
 remove_vowels('aardvark')
 remove_vowels('captain')
 remove_vowels('echo')
-# Define a function named normalize_name. It should accept a string and return a valid python identifier, that is:
-# anything that is not a valid python identifier should be removed
-# leading and trailing whitespace should be removed
-# everything should be lowercase
-# spaces should be replaced with underscores
-# for example:
-# Name will become name
-# First Name will become first_name
-# % Completed will become completed
+# Define a function named normalize_name. It should accept a string and return a valid python identifier
 
+# A little clunky but it works and is robust
+def normalize_name(x):
+    x = x.strip()
+    x_list = list(x)
+    swapped_space = False
 
-# WORKING
-def normalize_name(y):
-    x = y.lower()
+    for char in x_list:
+        if not char.isidentifier() and not char == " ":
+            x_list.remove(char)
+
+    x = "".join(x_list)
     x = x.strip()
     x_list = list(x)
 
-    for char in x_list:
-        if not char.isidentifier() and not " ":
-            x_list.remove(char)
-    
+    for i, char in enumerate(x_list):   
+        if char == " " and not swapped_space:
+            x_list[i] = '_'
+            swapped_space = True
+        elif char == " " and swapped_space:
+            x_list[i] = ""
+            swapped_space = False
+
     x = "".join(x_list)
+    x = x.lower().strip()
     return x
 
-
-normalize_name(' $ d $ kk  uuY * ')
+normalize_name('First Name')
+normalize_name('% Completed')
 
 # Write a function named cumulative_sum that accepts a list of numbers and returns a list that is the cumulative sum of the numbers in the list.
 # cumulative_sum([1, 1, 1]) returns [1, 2, 3]
