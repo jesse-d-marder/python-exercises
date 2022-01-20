@@ -76,18 +76,34 @@ remove_vowels('echo')
 
 
 # WORKING
-def normalize_name(x):
+def normalize_name(y):
+    x = y.lower()
+    x = x.strip()
+    x_list = list(x)
 
-    for char in x:
-        if not char.isidentifier():
-            char = char.replace(char,"")
+    for char in x_list:
+        if not char.isidentifier() and not " ":
+            x_list.remove(char)
+    
+    x = "".join(x_list)
+    return x
 
 
+normalize_name(' $ d $ kk  uuY * ')
 
 # Write a function named cumulative_sum that accepts a list of numbers and returns a list that is the cumulative sum of the numbers in the list.
 # cumulative_sum([1, 1, 1]) returns [1, 2, 3]
 # cumulative_sum([1, 2, 3, 4]) returns [1, 3, 6, 10]
+
+def cumulative_sum(x):
+    new = [x[0]] # Initialize new list with first value to store cumulative sums
+    for i in range(1,len(x)):
+        new.append(x[i]+new[i-1])
+
+    return new
+cumulative_sum([1,2,3,4])
 # Additional Exercise
+
 
 # Once you've completed the above exercises, follow the directions from https://gist.github.com/zgulde/ec8ed80ad8216905cda83d5645c60886 in order to thouroughly comment your code to explain your code.
 # Bonus

@@ -18,7 +18,7 @@ hourly_rate = 25
 if hours_worked_in_week <= 40:
     weekly_paycheck = hours_worked_in_week*hourly_rate
 else:
-    weekly_paycheck = hours_worked_in_week*hourly_rate*1.5
+    weekly_paycheck = (hours_worked_in_week-40)*hourly_rate*1.5+(40*hourly_rate)
 
 ## 2 Loop Basics
 
