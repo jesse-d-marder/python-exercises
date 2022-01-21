@@ -19,7 +19,7 @@ is_vowel('b')
 is_vowel(5)
 # Define a function named is_consonant. It should return True if the passed string is a consonant, False otherwise. Use your is_vowel function to accomplish this.
 def is_consonant(x):
-    # Uses the previously defined is_vowel function to return True if the passed argument to is_vowel is not True
+    # Uses the previously defined is_vowel function to return True if the passed argument to is_vowel is not True. Not super robust as it assumes a one character string passed as the argument. 
     return not is_vowel(x)
 is_consonant('x')
 is_consonant('a')
@@ -94,7 +94,7 @@ def normalize_name(x):
         if not char.isidentifier() and not char == " ":
             x_list.remove(char)
 
-    # Makes the list back into a string, and strip leading/trailing whitespace out again 
+    # Makes the list back into a string, and strip leading/trailing whitespace out again. With invalid characters removed there could be leading/trailing whitespace again.
     x = "".join(x_list).strip()
     x_list = list(x)
 
@@ -113,6 +113,7 @@ def normalize_name(x):
 
 normalize_name('First Name')
 normalize_name('% Completed')
+normalize_name('   sum  of squares   ')
 normalize_name('   $  _ FIRst *  NA$me  (') # Returns '__first_name' - note '_' is valid identifier
 
 # Write a function named cumulative_sum that accepts a list of numbers and returns a list that is the cumulative sum of the numbers in the list.
@@ -128,6 +129,7 @@ def cumulative_sum(x):
     return new
 
 cumulative_sum([1,2,3,4])
+cumulative_sum([1,1,1,1])
 
 # Bonus
 
