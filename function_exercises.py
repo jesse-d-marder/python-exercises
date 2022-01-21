@@ -31,6 +31,7 @@ capitalize_consonant('aardvark')
 capitalize_consonant('rare')
 # Define a function named calculate_tip. It should accept a tip percentage (a number between 0 and 1) and the bill total, and return the amount to tip.
 def calculate_tip(tip_p, bill_total):
+    # Returns tip amount based on tip percentage and total bill arguments
     return tip_p * bill_total
 calculate_tip(0.18, 68.32)
 calculate_tip(0.2, 45)
@@ -47,6 +48,7 @@ handle_commas('3,987.44')
 
 # Define a function named get_letter_grade. It should accept a number and return the letter grade associated with that number (A-F).
 def get_letter_grade(user_grade):
+    # Checks the grade number and determines which range of values it is in, and returns the corresponding letter grade
     if 88 <= user_grade <= 100:
         return("A")
     elif 80 <= user_grade <= 87:
@@ -62,8 +64,11 @@ get_letter_grade(45)
 get_letter_grade(98)
 # Define a function named remove_vowels that accepts a string and returns a string with all the vowels removed.
 def remove_vowels(x):
+    # Uses the previously defined is_vowel function to check whether a character is a vowel or not
     for letter in x:
+        # Iterates through each character in the string
         if is_vowel(letter):
+            # If the character is a vowel then it removes it from the string
             x = x.replace(letter, "")
     return x
 remove_vowels('aardvark')
@@ -71,7 +76,7 @@ remove_vowels('captain')
 remove_vowels('echo')
 # Define a function named normalize_name. It should accept a string and return a valid python identifier
 
-# A little clunky but it works and is robust
+# A little clunky but it works
 def normalize_name(x):
     "Turns any string into a valid python identifier"
 
@@ -115,34 +120,39 @@ normalize_name('   $  _ FIRst *  NA$me  (') # Returns '__first_name' - note '_' 
 # cumulative_sum([1, 2, 3, 4]) returns [1, 3, 6, 10]
 
 def cumulative_sum(x):
+    # Takes in a list of numbers as an argument and returns a list of the cumulative sums of the original list
     new = [x[0]] # Initialize new list with first value to store cumulative sums
     for i in range(1,len(x)):
-        # Iterates through list of numbers (starting with the second) and adds value to previous value in new list
+        # Iterates through list of numbers (starting with the second) and adds value to previous value
         new.append(x[i]+new[i-1])
     return new
 
 cumulative_sum([1,2,3,4])
-# Additional Exercise
 
-
-# Once you've completed the above exercises, follow the directions from https://gist.github.com/zgulde/ec8ed80ad8216905cda83d5645c60886 in order to thouroughly comment your code to explain your code.
 # Bonus
 
 # Create a function named twelveto24. It should accept a string in the format 10:45am or 4:30pm and return a string that is the representation of the time in a 24-hour format. Bonus write a function that does the opposite.
 def twelveto24(standard_time):
+    # Accepts standard time as a string - only works for 10:45 am - 4:30 pm per problem description
+
+    # Assumes hour is the first two characters of the time and converts to an integer for later comparison
     hour = int(standard_time.split(':')[0][0:2])
+
+    # Minute string is broken out here for clarity
     minute = standard_time.split(':')[1][0:2]
     
-
+    # Checks whether the hour is between 1 and 4, and if so adds 12 to get 24 hour hour value
     if 1 <= hour <= 4:
+        # Removes am/pm text
         standard_time = standard_time.replace("am","")
         standard_time = standard_time.replace("pm","")
         hour = hour + 12
-        # print(hour)
+        # Removes : from the time string
         standard_time = standard_time.replace(":","")
 
         return str(hour) + minute
     else:
+        # If the hour is not after 12 pm then returned value is simply the standard time without : and am/pm
         standard_time = standard_time.replace("am","")
         standard_time = standard_time.replace("pm","")
 
@@ -153,6 +163,7 @@ twelveto24('12:50pm')
 twelveto24('4:30pm')
 
 def twentyfourto12(world_time):
+    # Converts 24-hour time to standard time
     hour = int(world_time[0:2])
     minute = world_time[2:4]
     if hour <= 11:
@@ -172,7 +183,6 @@ twentyfourto12('1212')
 
 # Create a function named col_index. It should accept a spreadsheet column name, and return the index number of the column.
 
-# Not sure if this is fully correct for all cases
 import string
 
 def col_index(col_name):
@@ -180,17 +190,18 @@ def col_index(col_name):
     alphabet = list(string.ascii_uppercase)
     ind_values = []
 
+    # First break out values of individual characters in string and output to ind_values list (used for troubleshooting)
     for char in col_name:
         ind_values.append((alphabet.index(char)+1))
     
-
     for list_i in range(len(ind_values)-1):
-        ind_values[list_i] = ind_values[list_i]*26*(len(ind_values)-1)
-
+        ind_values[list_i] = ind_values[list_i]*26**(len(ind_values)-list_i-1)
 
     return sum(ind_values)
         
 
+col_index('B')
+col_index('CDA')
 col_index('AA')
 
 # col_index('A') returns 1
