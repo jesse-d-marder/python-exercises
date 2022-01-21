@@ -73,18 +73,27 @@ remove_vowels('echo')
 
 # A little clunky but it works and is robust
 def normalize_name(x):
+    "Turns any string into a valid python identifier"
+
+    # Initially strip out whitespace from beginning and end
     x = x.strip()
+
+    # Turn string into a list of characters for individual evaluation
     x_list = list(x)
+
+    # Initializes a variable to track whether an "internal" space has been swapped to an "_"
     swapped_space = False
 
+    # Cycles through characters in list and removes those that are not valid identifiers, except spaces which will be tackled later (need to differentiate between leading/trailing whitespace and internal whitespace)
     for char in x_list:
         if not char.isidentifier() and not char == " ":
             x_list.remove(char)
 
-    x = "".join(x_list)
-    x = x.strip()
+    # Makes the list back into a string, and strip leading/trailing whitespace out again 
+    x = "".join(x_list).strip()
     x_list = list(x)
 
+    # Iterates back through list of characters again (now without invalid identifiers) and converts internal space (" ") to "_"
     for i, char in enumerate(x_list):   
         if char == " " and not swapped_space:
             x_list[i] = '_'
@@ -99,6 +108,7 @@ def normalize_name(x):
 
 normalize_name('First Name')
 normalize_name('% Completed')
+normalize_name('   $  _ FIRst *  NA$me  (') # Returns '__first_name' - note '_' is valid identifier
 
 # Write a function named cumulative_sum that accepts a list of numbers and returns a list that is the cumulative sum of the numbers in the list.
 # cumulative_sum([1, 1, 1]) returns [1, 2, 3]
@@ -107,9 +117,10 @@ normalize_name('% Completed')
 def cumulative_sum(x):
     new = [x[0]] # Initialize new list with first value to store cumulative sums
     for i in range(1,len(x)):
+        # Iterates through list of numbers (starting with the second) and adds value to previous value in new list
         new.append(x[i]+new[i-1])
-
     return new
+
 cumulative_sum([1,2,3,4])
 # Additional Exercise
 
@@ -118,7 +129,70 @@ cumulative_sum([1,2,3,4])
 # Bonus
 
 # Create a function named twelveto24. It should accept a string in the format 10:45am or 4:30pm and return a string that is the representation of the time in a 24-hour format. Bonus write a function that does the opposite.
+def twelveto24(standard_time):
+    hour = int(standard_time.split(':')[0][0:2])
+    minute = standard_time.split(':')[1][0:2]
+    
+
+    if 1 <= hour <= 4:
+        standard_time = standard_time.replace("am","")
+        standard_time = standard_time.replace("pm","")
+        hour = hour + 12
+        # print(hour)
+        standard_time = standard_time.replace(":","")
+
+        return str(hour) + minute
+    else:
+        standard_time = standard_time.replace("am","")
+        standard_time = standard_time.replace("pm","")
+
+        return standard_time.replace(":","")
+
+twelveto24('10:45am')
+twelveto24('12:50pm')
+twelveto24('4:30pm')
+
+def twentyfourto12(world_time):
+    hour = int(world_time[0:2])
+    minute = world_time[2:4]
+    if hour <= 11:
+        final_hour = hour
+        am_pm = 'am'
+    elif hour == 12:
+        final_hour = hour
+        am_pm = 'pm'
+    else:
+        final_hour = hour - 12
+        am_pm = 'pm'
+    return str(final_hour) + ':' + minute + am_pm
+
+twentyfourto12('2345')
+twentyfourto12('0330')
+twentyfourto12('1212')
+
 # Create a function named col_index. It should accept a spreadsheet column name, and return the index number of the column.
+
+# Not sure if this is fully correct for all cases
+import string
+
+def col_index(col_name):
+    "Returns the index number of the col_name argument"
+    alphabet = list(string.ascii_uppercase)
+    ind_values = []
+
+    for char in col_name:
+        ind_values.append((alphabet.index(char)+1))
+    
+
+    for list_i in range(len(ind_values)-1):
+        ind_values[list_i] = ind_values[list_i]*26*(len(ind_values)-1)
+
+
+    return sum(ind_values)
+        
+
+col_index('AA')
+
 # col_index('A') returns 1
 # col_index('B') returns 2
 # col_index('AA') returns 27
